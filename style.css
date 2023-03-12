@@ -32,7 +32,7 @@ Button{
     border: none;
     border-radius: 5px;
     font-size: 45px;
-
+    cursor: pointer;
 }
 
 
