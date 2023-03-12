@@ -7,28 +7,39 @@ function getcomputerChoice(){
 
 
 function getResult(playerChoice,computerChoice){
-    let score
-    // let playerScore
-    // let computerScore
+    // let score
+    let playerScore
+    let computerScore
     if(playerChoice == computerChoice){
-        score = 0
+        // score = 0
+        playerScore=0
+        computerScore=0
     } else if(playerChoice == 'Stone' && computerChoice == 'Scissors'){
-        score = 1
+        // score = 1
+        playerScore=1
+        computerScore=0
     } else if(playerChoice == 'Paper' && computerChoice == 'Stone'){
-        score = 1
+        // score = 1
+        playerScore=1
+        computerScore=0
     } else if(playerChoice == 'Scissors' && computerChoice == 'Paper'){
-        score = 1
+        // score = 1
+        playerScore=1
+        computerScore=0
     }else {
-        score = -1
+        // score = -1
+        playerScore=-1
+        computerScore=1
     }
-    return score
+    // return score
+    return {playerScore,computerScore}
 }
-function displayResult(score, computerChoice, playerChoice, totalScore){
+function displayResult(score, computerChoice, playerChoice, playerScore, computerScore ){
     const resultDiv = document.getElementById('result')
     const playerScoreDiv = document.getElementById('playerscore')
     const handsDiv = document.getElementById('hand')
 
-    playerScoreDiv.innerText = `PlayerScore = ${totalScore}`
+    playerScoreDiv.innerText = `PlayerScore = ${playerScore}  ComputerScore = ${computerScore} `
 
     handsDiv.innerText = `🧑 ${playerChoice}  vs 🤖 ${computerChoice}`
     
@@ -45,10 +56,11 @@ function buttonClick(playerChoice){
     const computerChoice = getcomputerChoice()
     console.log({computerChoice})
     const score = getResult(playerChoice,computerChoice)
-    totalScore['playerScore'] += score
+    score.computerScore += score.computerScore
+    score.playerScore += score.playerScore
     console.log({score})
     console.log({totalScore})
-    displayResult(score, computerChoice, playerChoice, totalScore['playerScore'])
+    displayResult(score, computerChoice, playerChoice, score.playerScore, score.computerScore)
 }
 function playGame(){
     const spsButton = document.querySelectorAll('.spsButton')
