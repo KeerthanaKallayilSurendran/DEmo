@@ -1,87 +1,86 @@
-const totalScore = {computerScore:0, playerScore:0}
-function getcomputerChoice(){
-    let sps = ['Stone', 'Paper', 'Scissors']
+totalScore = {playerScore:0, computerScore:0}
+let totalComputerScore = 0
+let totalPlayerScore = 0
+
+function getComputerChoice(){
+    let sps = ['Stone','Paper','Scissors']
     let computerChoice = Math.floor(Math.random()*3)
     return sps[computerChoice]
 }
 
-
 function getResult(playerChoice,computerChoice){
-    // let score
     let playerScore
     let computerScore
-    if(playerChoice == computerChoice){
-        // score = 0
+    if(playerChoice==computerChoice){
         playerScore=0
         computerScore=0
-    } else if(playerChoice == 'Stone' && computerChoice == 'Scissors'){
-        // score = 1
+    }else if(playerChoice=="Stone" && computerChoice=="Scissors"){
         playerScore=1
-        computerScore=0
-    } else if(playerChoice == 'Paper' && computerChoice == 'Stone'){
-        // score = 1
+        computerScore=-1
+    }else if(playerChoice=="Scissors" && computerChoice=="Paper"){
         playerScore=1
-        computerScore=0
-    } else if(playerChoice == 'Scissors' && computerChoice == 'Paper'){
-        // score = 1
+        computerScore=-1
+    }else if(playerChoice=="Paper" && computerChoice=="Stone"){
         playerScore=1
-        computerScore=0
+        computerScore=-1
     }else {
-        // score = -1
         playerScore=-1
         computerScore=1
     }
-    // return score
     return {playerScore,computerScore}
 }
-function displayResult(score, computerChoice, playerChoice, playerScore, computerScore ){
+
+function btnClick(playerChoice){
+    console.log(playerChoice)
+    const computerChoice = getComputerChoice() 
+    console.log(computerChoice)
+    const score = getResult(playerChoice,computerChoice)
+    totalComputerScore = totalComputerScore+ score.computerScore
+    totalPlayerScore = totalPlayerScore + score.playerScore
+    console.log(score.computerScore)
+    console.log(score.playerScore)
+    console.log({score})
+    console.log({totalScore})
+    displayResult(totalComputerScore, totalPlayerScore,playerChoice, computerChoice, score.playerScore)
+}
+
+function displayResult(totalComputerScore, totalPlayerScore, playerChoice, computerChoice,playerScore){
+    const playerchoiceDiv = document.getElementById('playerchoice')
     const resultDiv = document.getElementById('result')
-    const playerScoreDiv = document.getElementById('playerscore')
-    const handsDiv = document.getElementById('hand')
-
-    playerScoreDiv.innerText = `PlayerScore = ${playerScore}  ComputerScore = ${computerScore} `
-
-    handsDiv.innerText = `🧑 ${playerChoice}  vs 🤖 ${computerChoice}`
-    
-    if(score == 1){
+    const scoreDiv = document.getElementById('score')
+    scoreDiv.innerText = `PlayerScore = ${totalPlayerScore}  ComputerScore = ${totalComputerScore}`
+    playerchoiceDiv.innerText = `🧑 ${playerChoice}  vs 🤖 ${computerChoice}`
+    if(playerScore == 1){
         resultDiv.innerText = 'You Win '
-    } else if(score == -1){
+    } else if(playerScore == -1){
         resultDiv.innerText ='You Lose '
     }else {
         resultDiv.innerText = 'You Drew  '
     }
+    
 }
-function buttonClick(playerChoice){
-    console.log({playerChoice})
-    const computerChoice = getcomputerChoice()
-    console.log({computerChoice})
-    const score = getResult(playerChoice,computerChoice)
-    score.computerScore += score.computerScore
-    score.playerScore += score.playerScore
-    console.log({score})
-    console.log({totalScore})
-    displayResult(score, computerChoice, playerChoice, score.playerScore, score.computerScore)
-}
-function playGame(){
-    const spsButton = document.querySelectorAll('.spsButton')
 
-    spsButton.forEach(spsButton => {
-        spsButton.onclick = () => buttonClick(spsButton.value)
+function playGame(){
+    const btn = document.querySelectorAll('.btn')
+    btn.forEach(btn => {
+        btn.onclick = () => btnClick(btn.value)
     })
 
-    const endGame = document.getElementById('endGame')
+    const endGame = document.getElementById('end')
     endGame.onclick = () => endGame(totalScore)
 }
 
-function endGame(totalScore){
+
+function endGame(){
     totalScore['computerScore'] = 0
     totalScore['playerScore'] = 0
     const resultDiv = document.getElementById('result')
-    const playerScoreDiv = document.getElementById('playerscore')
-    const handsDiv = document.getElementById('hand')
+    const playerchoiceDiv = document.getElementById('playerchoice')
+    const scoreDiv = document.getElementById('score')
 
     resultDiv.innerText = " "
-    playerScoreDiv.innerText = " "
-    handsDiv.innerText = " "
+    playerchoiceDiv.innerText = " "
+    scoreDiv.innerText = " "
 }
+
 playGame()
