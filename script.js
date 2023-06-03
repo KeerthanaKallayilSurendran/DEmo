@@ -66,14 +66,14 @@ function playGame(){
         btn.onclick = () => btnClick(btn.value)
     })
 
-    const endGame = document.getElementById('end')
-    endGame.onclick = () => endGame(totalScore)
+    const endGamebtn = document.getElementById('endGamebtn')
+    endGamebtn.onclick = () => endGame(totalScore)
 }
 
 
-function endGame(){
-    totalScore['computerScore'] = 0
-    totalScore['playerScore'] = 0
+function endGame(finalScore){
+    finalScore.computerScore = 0;
+    finalScore.playerScore = 0;
     const resultDiv = document.getElementById('result')
     const playerchoiceDiv = document.getElementById('playerchoice')
     const scoreDiv = document.getElementById('score')
@@ -84,3 +84,4 @@ function endGame(){
 }
 
 playGame()
+
